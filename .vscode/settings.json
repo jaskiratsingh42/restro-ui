@@ -1,0 +1,14 @@
+{
+    "workbench.editorAssociations": [],
+    "[json]": {},
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "launch": {
+
+
+        "configurations": [],
+        "compounds": []
+    }
+}
