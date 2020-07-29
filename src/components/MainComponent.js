@@ -59,10 +59,10 @@ class Main extends Component {
               component={() => <Menu dishes={this.state.dishes} />}
             />
             <Route path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contact" component={Contact} />
+            <Route exact path="/contactus" component={Contact} />
             <Route
               exact
-              path="/about"
+              path="/aboutus"
               component={() => <About leaders={this.state.leaders} />}
             />
             <Redirect to="/home" />
