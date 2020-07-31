@@ -60,7 +60,6 @@ class Main extends Component {
               path="/aboutus"
               component={() => <About leaders={this.props.leaders} />}
             />
-            } />
             <Route
               exact
               path="/menu"
