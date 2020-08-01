@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   Card,
   CardImg,
@@ -7,8 +7,147 @@ import {
   CardBody,
   Breadcrumb,
   BreadcrumbItem,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Input,
+  Label,
+  Row,
+  Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Control, LocalForm, Errors } from "react-redux-form";
+
+// Comment Form Class Component Starts here
+class CommentForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isModalOpen: false,
+    };
+    this.toggleModal = this.toggleModal.bind(this);
+  }
+
+  toggleModal() {
+    this.setState({
+      isModalOpen: !this.state.isModalOpen,
+    });
+  }
+
+  handleSubmitComment(event) {
+    alert("Comment Submitted");
+    event.preventDefault();
+  }
+
+  render() {
+    const required = (val) => val && val.length;
+    const maxLength = (len) => (val) => !val || val.length <= len;
+    const minLength = (len) => (val) => val && val.length >= len;
+    return (
+      <div>
+        <Button outline onClick={this.toggleModal}>
+          <span className="fa fa-pencil fa-lg">&nbsp;</span>
+          Submit Comment
+        </Button>
+        <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+          <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
+          <ModalBody>
+            <LocalForm onSubmit={this.handleSubmitComment}>
+              <Row>
+                <Label htmlFor="rating" md={12}>
+                  Rating
+                </Label>
+                <Col md={12}>
+                  <Input type="select" id="rating" name="rating">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </Input>
+                </Col>
+              </Row>
+              <Row className="form-group">
+                <Label htmlFor="author" md={12}>
+                  Your Name
+                </Label>
+                <Col md={12}>
+                  <Control.text
+                    model=".author"
+                    id="author"
+                    name="author"
+                    placeholder="Your Name"
+                    className="form-control"
+                    validators={{
+                      required,
+                      minLength: minLength(2),
+                      maxLength: maxLength(15),
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".author"
+                    show="touched"
+                    messages={{
+                      required: "Required: ",
+                      minLength: " Must be greater than 2 characters",
+                      maxLength: " Must be 15 characters or less",
+                    }}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Label md={12} htmlFor="comment">
+                  Comment
+                </Label>
+                <Col md={12}>
+                  <Control.textarea
+                    model=".comment"
+                    id="comment"
+                    name="comment"
+                    rows="6"
+                    placeholder=""
+                    className="form-control"
+                    validators={{
+                      required,
+                      minLength: minLength(4),
+                      maxLength: maxLength(140),
+                    }}
+                  />
+                  <Errors
+                    className="text-danger"
+                    model=".comment"
+                    show="touched"
+                    messages={{
+                      required: "Required: ",
+                      minLength: " Must be greater than 4 characters",
+                      maxLength: " Must be 140 characters or less",
+                    }}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col md={12}>
+                  <Button
+                    className="mt-3"
+                    onClick={this.handleSubmitComment}
+                    type="submit"
+                    value="submit"
+                    color="primary"
+                  >
+                    Submit
+                  </Button>
+                </Col>
+              </Row>
+            </LocalForm>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
 
 function RenderDish({ dish }) {
   return (
@@ -48,6 +187,7 @@ function RenderComments({ comments }) {
       <div>
         <h4>Comments</h4>
         {commentsSection}
+        <CommentForm />
       </div>
     );
   }

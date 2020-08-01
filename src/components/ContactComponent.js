@@ -13,21 +13,6 @@ import { Link } from "react-router-dom";
 class Contact extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      firstname: "",
-      lastname: "",
-      telnum: "",
-      email: "",
-      agree: false,
-      contactType: "Tel.",
-      message: "",
-      touched: {
-        firstname: false,
-        lastname: false,
-        telnum: false,
-        email: false,
-      },
-    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -163,9 +148,9 @@ class Contact extends Component {
                     model=".lastname"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: "Must be greater than 2 characters",
-                      maxLength: "Must be 15 characters or less",
+                      required: "Required: ",
+                      minLength: " Must be greater than 2 characters",
+                      maxLength: " Must be 15 characters or less",
                     }}
                   />
                 </Col>
@@ -193,10 +178,10 @@ class Contact extends Component {
                     model=".telnum"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      minLength: "Must be greater than 2 numbers",
-                      maxLength: "Must be 15 numbers or less",
-                      isNumber: "Must be a number",
+                      required: "Required: ",
+                      minLength: " Must be greater than 2 numbers",
+                      maxLength: " Must be 15 numbers or less",
+                      isNumber: " Must be a number",
                     }}
                   />
                 </Col>
@@ -222,8 +207,8 @@ class Contact extends Component {
                     model=".email"
                     show="touched"
                     messages={{
-                      required: "Required",
-                      validEmail: "Invalid Email Address",
+                      required: "Required: ",
+                      validEmail: " Invalid Email Address",
                     }}
                   />
                 </Col>
