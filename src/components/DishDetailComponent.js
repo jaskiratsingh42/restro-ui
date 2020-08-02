@@ -36,9 +36,14 @@ class CommentForm extends Component {
     });
   }
 
-  handleSubmitComment(event) {
+  handleSubmitComment(values) {
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
     alert("Comment Submitted");
-    event.preventDefault();
   }
 
   render() {
@@ -54,7 +59,7 @@ class CommentForm extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={this.handleSubmitComment}>
+            <LocalForm onSubmit={(values) => this.handleSubmitComment(values)}>
               <Row>
                 <Label htmlFor="rating" md={12}>
                   Rating
@@ -132,7 +137,6 @@ class CommentForm extends Component {
                 <Col md={12}>
                   <Button
                     className="mt-3"
-                    onClick={this.handleSubmitComment}
                     type="submit"
                     value="submit"
                     color="primary"
@@ -167,7 +171,7 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString([], options);
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments == null) return <div></div>;
   else {
     const commentsSection = comments.map((comments) => {
@@ -187,7 +191,7 @@ function RenderComments({ comments }) {
       <div>
         <h4>Comments</h4>
         {commentsSection}
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   }
@@ -215,7 +219,11 @@ const DishDetail = (props) => {
           </div>
           <div className="col-12 col-md-5 m-1">
             {/* {props.comments} */}
-            <RenderComments comments={props.comments} />
+            <RenderComments
+              comments={props.comments}
+              addComment={props.addComment}
+              dishId={props.dish.id}
+            />{" "}
           </div>
         </div>
       </div>
