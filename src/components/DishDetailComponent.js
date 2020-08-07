@@ -39,7 +39,7 @@ class CommentForm extends Component {
   }
 
   handleSubmitComment(values) {
-    this.props.addComment(
+    this.props.postComment(
       this.props.dishId,
       values.rating,
       values.author,
@@ -173,7 +173,7 @@ function formatDate(dateString) {
   return new Date(dateString).toLocaleDateString([], options);
 }
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
   if (comments == null) return <div></div>;
   else {
     const commentsSection = comments.map((comments) => {
@@ -193,7 +193,7 @@ function RenderComments({ comments, addComment, dishId }) {
       <div>
         <h4>Comments</h4>
         {commentsSection}
-        <CommentForm dishId={dishId} addComment={addComment} />
+        <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
   }
@@ -238,7 +238,7 @@ const DishDetail = (props) => {
             {/* {props.comments} */}
             <RenderComments
               comments={props.comments}
-              addComment={props.addComment}
+              postComment={props.postComment}
               dishId={props.dish.id}
             />{" "}
           </div>
