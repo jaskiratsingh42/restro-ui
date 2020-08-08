@@ -9,34 +9,52 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
+import { Loading } from "./LoadingComponent";
+import { Fade, Stagger } from "react-animation-components";
 
-function RenderLeader({ leader }) {
-  var imgStyle = {
+function RenderLeader({ leader, isLoading, errMess }) {
+  const imgStyle = {
     minWidth: "64px",
     minLength: "64px",
   };
-  return (
-    <Media tag="li">
-      <Media left middle>
-        <Media
-          object
-          style={imgStyle}
-          src={baseUrl + leader.image}
-          alt={leader.name}
-        ></Media>
-      </Media>
-      <Media body className="ml-5">
-        <Media heading>{leader.name}</Media>
-        <p>{leader.designation}</p>
-        <p>{leader.description}</p>
-      </Media>
-    </Media>
-  );
+
+  if (isLoading) {
+    return <Loading />;
+  } else if (errMess) {
+    return <h4>{errMess}</h4>;
+  } else
+    return (
+      <Stagger in>
+        <Fade in>
+          <Media tag="li">
+            <Media left middle>
+              <Media
+                object
+                style={imgStyle}
+                src={baseUrl + leader.image}
+                alt={leader.name}
+              ></Media>
+            </Media>
+            <Media body className="ml-5">
+              <Media heading>{leader.name}</Media>
+              <p>{leader.designation}</p>
+              <p>{leader.description}</p>
+            </Media>
+          </Media>
+        </Fade>
+      </Stagger>
+    );
 }
 
 function About(props) {
   const leaders = props.leaders.leaders.map((leader) => {
-    return <RenderLeader leader={leader} />;
+    return (
+      <RenderLeader
+        leader={leader}
+        isLoading={props.leaderLoading}
+        errMess={props.leaderErrMess}
+      />
+    );
   });
 
   return (
